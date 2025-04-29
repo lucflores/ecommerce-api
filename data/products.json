@@ -1,0 +1,15 @@
+[
+  {
+    "id": 1,
+    "title": "Zapatillas",
+    "description": "Running ultraligeras",
+    "code": "ZAP-100",
+    "price": 80150,
+    "status": true,
+    "stock": 45,
+    "category": "calzado",
+    "thumbnails": [
+      "img/zapa1.jpg"
+    ]
+  }
+]
