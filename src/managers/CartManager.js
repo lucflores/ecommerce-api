@@ -3,9 +3,10 @@ import fs from 'fs/promises';
 export class CartManager {
   constructor(path) {
     this.path = path;
-    this.carts = [];
-    this._load();
+    this.carts = [];  
+    this._load();     
   }
+
   async _load() {
     try {
       const d = await fs.readFile(this.path, 'utf-8');
@@ -15,9 +16,11 @@ export class CartManager {
       await this._save();
     }
   }
+
   async _save() {
     await fs.writeFile(this.path, JSON.stringify(this.carts, null, 2));
   }
+
   async createCart() {
     const newId = this.carts.length
       ? this.carts[this.carts.length - 1].id + 1
@@ -27,12 +30,14 @@ export class CartManager {
     await this._save();
     return cart;
   }
+
   async getCartById(cid) {
     await this._load();
     return this.carts.find(c => c.id === Number(cid)) || null;
   }
+
   async addProduct(cid, pid) {
-    await this._load();
+    await this._load();  
     const cart = this.carts.find(c => c.id === Number(cid));
     if (!cart) return null;
     const item = cart.products.find(p => p.product === Number(pid));

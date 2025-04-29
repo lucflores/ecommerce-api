@@ -2,9 +2,9 @@ import fs from 'fs/promises';
 
 export class ProductManager {
   constructor(path) {
-    this.path = path;
-    this.products = [];
-    this._load();
+    this.path = path;          
+    this.products = [];      
+    this._load();            
   }
 
   async _load() {
