@@ -28,10 +28,45 @@ router.get('/:pid', async (req, res) => {
 // CREAR un producto
 router.post('/', async (req, res) => {
   try {
-    const newProduct = await manager.addProduct(req.body);
-    res.status(201).json(newProduct);
+    const {
+      title,
+      description,
+      code,
+      price,
+      stock,
+      category,
+      status = true,
+      thumbnails = []
+    } = req.body;
+
+    if (!title || !description || !code || price == null || stock == null || !category) {
+      return res
+        .status(400)
+        .json({ error: 'Faltan datos: titulo, descripción, código, precio, stock y categoria son requeridos.' });
+    }
+
+    const all = await manager.getProducts();
+    if (all.some(p => p.code === code)) {
+      return res
+        .status(400)
+        .json({ error: `Ya existe un producto con código="${code}".` });
+    }
+
+    const newProduct = await manager.addProduct({
+      title,
+      description,
+      code,
+      price,
+      status,
+      stock,
+      category,
+      thumbnails
+    });
+
+    return res.status(201).json(newProduct);
   } catch (err) {
-    res.status(500).json({ error: 'Error al crear producto' });
+    console.error(err);
+    return res.status(500).json({ error: 'Error al crear producto' });
   }
 });
 

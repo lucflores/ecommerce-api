@@ -4,12 +4,40 @@
     "title": "Zapatillas",
     "description": "Running ultraligeras",
     "code": "ZAP-100",
-    "price": 80150,
+    "price": 89999.99,
     "status": true,
-    "stock": 45,
+    "stock": 15,
     "category": "calzado",
     "thumbnails": [
       "img/zapa1.jpg"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Zapatillas Running 2.0",
+    "description": "Cómodos para correr",
+    "code": "ZAP-200",
+    "price": 49999.99,
+    "status": true,
+    "stock": 15,
+    "category": "calzado",
+    "thumbnails": [
+      "z1.jpg",
+      "z2.jpg"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Zapatillas Adidas",
+    "description": "Cómodos",
+    "code": "ZAP-205",
+    "price": 99999.99,
+    "status": true,
+    "stock": 23,
+    "category": "calzado",
+    "thumbnails": [
+      "z1.jpg",
+      "z2.jpg"
     ]
   }
 ]

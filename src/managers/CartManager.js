@@ -9,8 +9,8 @@ export class CartManager {
 
   async _load() {
     try {
-      const d = await fs.readFile(this.path, 'utf-8');
-      this.carts = JSON.parse(d);
+      const fileData = await fs.readFile(this.path, 'utf-8');
+      this.carts = JSON.parse(fileData);
     } catch {
       this.carts = [];
       await this._save();

@@ -9,8 +9,8 @@ export class ProductManager {
 
   async _load() {
     try {
-      const data = await fs.readFile(this.path, 'utf-8');
-      this.products = JSON.parse(data);
+      const fileContent = await fs.readFile(this.path, 'utf-8');
+      this.products = JSON.parse(fileContent);
     } catch {
       this.products = [];
       await this._save();
