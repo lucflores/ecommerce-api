@@ -37,18 +37,16 @@ app.use('/',             viewsRouter);
 io.on('connection', socket => {
   console.log('Nuevo cliente conectado');
 
-  // Al conectarse, enviamos lista actual de productos
-  socket.emit('updateProducts', /* función para leer todos */);
+  socket.emit('updateProducts',);
 
-  // (Opcional) escuchar eventos desde el cliente:
   socket.on('newProduct', async prodData => {
     await 
-    io.emit('updateProducts', /* pm.getProducts() */);
+    io.emit('updateProducts',);
   });
 
   socket.on('deleteProduct', async id => {
-    await /* pm.deleteProduct(id) */
-    io.emit('updateProducts', /* pm.getProducts() */);
+    await 
+    io.emit('updateProducts', );
   });
 });
 

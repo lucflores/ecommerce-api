@@ -5,7 +5,6 @@ export default function productRouter(io) {
   const router = Router();
   const manager = new ProductManager('data/products.json');
 
-  // LISTAR todos los productos
   router.get('/', async (req, res) => {
     try {
       const products = await manager.getProducts();
@@ -15,7 +14,6 @@ export default function productRouter(io) {
     }
   });
 
-  // TRAER un producto por ID
   router.get('/:pid', async (req, res) => {
     try {
       const product = await manager.getProductById(req.params.pid);
@@ -26,7 +24,6 @@ export default function productRouter(io) {
     }
   });
 
-  // CREAR un producto
   router.post('/', async (req, res) => {
     try {
       const {
@@ -62,7 +59,6 @@ export default function productRouter(io) {
         thumbnails
       });
 
-      // → Emite a **todos** los clientes conectados la lista actualizada
       const updatedList = await manager.getProducts();
       io.emit('updateProducts', updatedList);
 
@@ -73,25 +69,21 @@ export default function productRouter(io) {
     }
   });
 
-  // ACTUALIZAR un producto
   router.put('/:pid', async (req, res) => {
     try {
       const updated = await manager.updateProduct(req.params.pid, req.body);
       if (!updated) return res.status(404).json({ error: 'Producto no encontrado' });
-      // Opcional: también podrías emitir aquí si quieres notificar updates
       return res.json(updated);
     } catch (err) {
       res.status(500).json({ error: 'Error al actualizar producto' });
     }
   });
 
-  // ELIMINAR un producto
   router.delete('/:pid', async (req, res) => {
     try {
       const deleted = await manager.deleteProduct(req.params.pid);
       if (!deleted) return res.status(404).json({ error: 'Producto no encontrado' });
 
-      // → Emite la lista actualizada tras la eliminación
       const updatedList = await manager.getProducts();
       io.emit('updateProducts', updatedList);
 

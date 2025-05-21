@@ -45,7 +45,6 @@ export class ProductManager {
     await this._load();
     const idx = this.products.findIndex(p => p.id === Number(pid));
     if (idx < 0) return null;
-    // nunca cambiar el id
     this.products[idx] = { ...this.products[idx], ...fields, id: Number(pid) };
     await this._save();
     return this.products[idx];
