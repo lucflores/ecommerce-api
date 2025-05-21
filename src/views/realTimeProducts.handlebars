@@ -1,0 +1,54 @@
+<h1>Lista de productos</h1>
+
+<ul id="prod-list">
+</ul>
+
+<h2>Agregar Producto</h2>
+<form id="prod-form">
+  <input name="title" placeholder="Título" required>
+  <input name="description" placeholder="Descripción" required>
+  <input name="code" placeholder="Código" required>
+  <input name="price" type="number" placeholder="Precio" required>
+  <input name="stock" type="number" placeholder="Stock" required>
+  <input name="category" placeholder="Categoría" required>
+  <button type="submit">Crear</button>
+</form>
+
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const socket = io();
+    const list   = document.getElementById('prod-list');
+    const form   = document.getElementById('prod-form');
+
+    socket.on('updateProducts', prods => {
+      list.innerHTML = prods.map(p =>
+        `<li>
+           ${p.title} – $${p.price}
+           <button onclick="deleteProd(${p.id})">Eliminar</button>
+         </li>`
+      ).join('');
+    });
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form));
+      const res = await fetch('/api/products', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(data)
+      });
+      if (!res.ok) {
+        const err = await res.json();
+        return alert('Error: ' + err.error);
+      }
+      form.reset();
+    });
+
+    window.deleteProd = async function(id) {
+      await fetch(`/api/products/${id}`, { method: 'DELETE' });
+    }
+  });
+</script>
+
